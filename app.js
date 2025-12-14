@@ -12,15 +12,30 @@ function calculate(e) {
   const calculatedPayments = parseFloat(years.value) * 12;
   const x = Math.pow(1 + calculatedInterest, calculatedPayments);
   const monthly = (principal * calculatedInterest * x) / (x - 1);
-  console.log('ikjsfb');
+
   if (principal > 0 && calculatedPayments > 0 && isFinite(monthly)) {
     monthlyPayment.value = monthly.toFixed(2);
     totalAmount.value = (monthly * calculatedPayments).toFixed(2);
     totalInterest.value = (monthly * calculatedPayments - principal).toFixed(2);
-    console.log('ib');
 
     document.getElementById('result').style.display = 'block';
+  } else {
+    showAlert('Please Enter The Value');
   }
-
   e.preventDefault();
+}
+
+function showAlert(error) {
+  const errorDiv = document.createElement('div');
+
+  errorDiv.className = 'alert alert-danger';
+  errorDiv.appendChild(document.createTextNode(error));
+  const card = document.querySelector('.card');
+  const heading = document.querySelector('.heading');
+
+  card.insertBefore(errorDiv, heading);
+
+  setTimeout(function () {
+    document.querySelector('.alert').remove();
+  }, 2000);
 }
